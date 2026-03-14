@@ -38,3 +38,12 @@
 body{
     font-family: var(--font-primary);
 }
+
+@layer base {
+    .theme-light{
+        @apply bg-[url('../../public/images/bg-desktop-light.jpg')] bg-cover bg-center bg-no-repeat h-80
+    }
+    .theme-dark{
+        @apply bg-[url('../../public/images/bg-desktop-dark.jpg')] bg-cover bg-center bg-no-repeat h-80
+    }
+}
