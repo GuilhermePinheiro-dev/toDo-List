@@ -21,7 +21,9 @@ export const TodoList = () => {
                         todos.map((todoItem) => (
                             <li key={todoItem.id} className={`p-6 border-b ${themeConfig[theme].todo.borderColor}`}>
                                 <div className="flex items-center gap-4">
-                                    <button className={`w-6 h-6 border ${themeConfig[theme].todo.borderColor} rounded-full cursor-pointer`}></button>
+                                    <span className="w-6 h-6 rounded-full hover:bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))] hover:p-px">
+                                        <button className={`w-full h-full ${themeConfig[theme].todo.backgroundColor} border ${themeConfig[theme].todo.borderColor} rounded-full cursor-pointer`}></button>
+                                    </span>
                                     <p className={`${themeConfig[theme].todo.textColor}`}>{todoItem.text}</p>
                                 </div>
                             </li>
@@ -29,22 +31,22 @@ export const TodoList = () => {
                     }
                 </ul>
 
-                <div className={`flex justify-between p-4 text-sm ${themeConfig[theme].todo.textColor}`}>
+                <div className={`flex justify-between p-4 text-sm ${themeConfig[theme].layout.textColor}`}>
                     <p>{todos.length} items total</p>
 
                     <div className="hidden sm:flex gap-4">
                         <button className="text-blue-500">All</button>
-                        <button>Active</button>
-                        <button>Completed</button>
+                        <button className={`cursor-pointer ${theme === "dark" ? "hover:text-gray-50" : "hover:text-purple-600"}`}>Active</button>
+                        <button className={`cursor-pointer ${theme === "dark" ? "hover:text-gray-50" : "hover:text-purple-600"}`}>Completed</button>
                     </div>
 
-                    <button>Clear Selected</button>
+                    <button className={`cursor-pointer ${theme === "dark" ? "hover:text-gray-50" : "hover:text-purple-600"}`}>Clear Selected</button>
                 </div>
             </div>
-            <div className={`${themeConfig[theme].todo.backgroundColor} ${themeConfig[theme].todo.textColor} flex justify-center gap-5 rounded-md py-4 mt-4 sm:hidden`}>
+            <div className={`${themeConfig[theme].todo.backgroundColor} ${themeConfig[theme].layout.textColor} flex justify-center gap-5 rounded-md py-4 mt-4 sm:hidden`}>
                 <button className="text-blue-500">All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button className={`cursor-pointer ${theme === "dark" ? "hover:text-gray-50" : "hover:text-purple-600"}`}>Active</button>
+                <button className={`cursor-pointer ${theme === "dark" ? "hover:text-gray-50" : "hover:text-purple-600"}`}>Completed</button>
             </div>
         </>
     )

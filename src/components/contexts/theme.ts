@@ -21,7 +21,7 @@ export const themeConfig = {
         layout: {
             heroClass: "theme-dark",
             backgroundColor: "bg-navy-950" ,
-            textColor: "text-gray-50"
+            textColor: "text-navy-850"
         },
         todo: {
             backgroundColor: "bg-navy-900",
