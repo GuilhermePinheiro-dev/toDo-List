@@ -1,12 +1,16 @@
 import { ThemeContext } from "../contexts/themeContext"
 import { themeConfig } from "../contexts/theme"
-import { useContext } from "react"
+import { useContext, type FormEvent } from "react"
 
-export const TodoForm = () => {
-    const {theme} = useContext(ThemeContext)
+interface TodoinputProps {
+    addTodo: (event: FormEvent<HTMLInputElement>) => void
+}
+
+export const TodoForm = ({ addTodo }: TodoinputProps) => {
+    const { theme } = useContext(ThemeContext)
     return (
         <>
-            <form className="relative mb-10">
+            <form className="relative mb-10" onSubmit={addTodo}>
                 <span className={`absolute h-6 w-6 border ${themeConfig[theme].todo.borderColor} top-1/2 transform: -translate-y-1/2 left-6 rounded-full cursor-pointer`}></span>
                 <input
                     type="text"
