@@ -12,6 +12,7 @@ export interface Todo {
 
 function App() {
   const [todoList, setTodoList] = useState<Todo[]>([])
+  const [filter, setFilter] = useState<"all" | "active" | "completed">("all")
 
   const addTodo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -48,6 +49,15 @@ function App() {
     setTodoList(newTodoList)
   }
 
+  const filteredList = todoList.filter(todo => {
+    if(filter === "active") return !todo.completed
+    if(filter === "completed") return todo.completed
+    return true
+  })
+
+  const clearCompleted = () => {
+    setTodoList(prev => prev.filter(todo => !todo.completed))
+  }
   return (
     <>
       <TodoContainer>
@@ -56,7 +66,12 @@ function App() {
 
         <TodoForm addTodo = {addTodo}></TodoForm>
 
-        <TodoList todoList={todoList} toggleTodoList={toggleTodoList}></TodoList>
+        <TodoList 
+        todoList={filteredList} 
+        toggleTodoList={toggleTodoList}
+        setFilter={setFilter}
+        filter={filter}
+        clearCompleted={clearCompleted}></TodoList>
       </TodoContainer>
 
     </>
