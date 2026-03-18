@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { themeConfig } from "../contexts/theme"
 import { ThemeContext } from "../contexts/themeContext"
-import type { Todo } from "../../App";
+import type { Todo } from "../hooks/useTodo";
 import IconCheck from "../../../public/images/icon-check.svg"
 
 interface TodoListProps {
