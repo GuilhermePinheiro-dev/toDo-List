@@ -1,15 +1,15 @@
 import { useContext } from "react"
 import { themeConfig } from "../contexts/theme"
 import { ThemeContext } from "../contexts/themeContext"
+import type { Todo } from "../../App";
+import IconCheck from "../../../public/images/icon-check.svg"
 
-const todos = [
-    { id: 1, text: "Todo 1" },
-    { id: 2, text: "Todo 2" },
-    { id: 3, text: "Todo 3" }
-]
+interface TodoListProps {
+    todoList: Todo[];
+    toggleTodoList: (id: number) => void
+}
 
-
-export const TodoList = () => {
+export const TodoList = ({todoList, toggleTodoList} : TodoListProps) => {
 
     const { theme } = useContext(ThemeContext)
 
@@ -18,13 +18,17 @@ export const TodoList = () => {
             <div className={`${themeConfig[theme].todo.backgroundColor} rounded-md`}>
                 <ul>
                     {
-                        todos.map((todoItem) => (
+                        todoList.map((todoItem) => (
                             <li key={todoItem.id} className={`p-6 border-b ${themeConfig[theme].todo.borderColor}`}>
                                 <div className="flex items-center gap-4">
-                                    <span className="w-6 h-6 rounded-full hover:bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))] hover:p-px">
-                                        <button className={`w-full h-full ${themeConfig[theme].todo.backgroundColor} border ${themeConfig[theme].todo.borderColor} rounded-full cursor-pointer`}></button>
+                                    <span className={`w-6 h-6 rounded-full hover:bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))] hover:p-px `}>
+                                        <button 
+                                        onClick={() => toggleTodoList(todoItem.id)}
+                                        className={`w-full h-full ${themeConfig[theme].todo.backgroundColor} border ${themeConfig[theme].todo.borderColor} rounded-full cursor-pointer ${todoItem.completed ? "bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))]" : ""}`}>
+                                            {todoItem.completed && <img src={IconCheck} alt="icone de marcado" className="w-2 h-2 m-auto" />}
+                                        </button>
                                     </span>
-                                    <p className={`${themeConfig[theme].todo.textColor}`}>{todoItem.text}</p>
+                                    <p className={`${themeConfig[theme].todo.textColor} ${todoItem.completed ? "line-through opacity-50" : ""}`} >{todoItem.text}</p>
                                 </div>
                             </li>
                         ))
@@ -32,7 +36,7 @@ export const TodoList = () => {
                 </ul>
 
                 <div className={`flex justify-between p-4 text-sm ${themeConfig[theme].layout.textColor}`}>
-                    <p>{todos.length} items total</p>
+                    <p>{todoList.length} items total</p>
 
                     <div className="hidden sm:flex gap-4">
                         <button className="text-blue-500">All</button>

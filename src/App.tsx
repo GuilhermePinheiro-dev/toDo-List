@@ -4,7 +4,7 @@ import { TodoList } from "./components/TodoList"
 import { TodoContainer } from "./components/TodoContainer"
 import { useState, type FormEvent } from "react"
 
-interface Todo {
+export interface Todo {
   id: number, 
   text: string,
   completed: boolean
@@ -22,12 +22,32 @@ function App() {
     console.log(todoItem)
 
     if(!todoItem.trim()) return
+
     setTodoList(prev => [...prev, {
       id: Date.now(),
       text: todoItem,
       completed: false
     }])
+
+    event.currentTarget.reset()
   }
+
+  const toggleTodoList = (id: number) => {
+    const newTodoList = todoList.map(todo => {
+      const completed = !todo.completed
+
+      if(id === todo.id){
+        return{
+          ...todo,
+          completed
+        };
+      }
+
+      return todo
+    })
+    setTodoList(newTodoList)
+  }
+
   return (
     <>
       <TodoContainer>
@@ -36,7 +56,7 @@ function App() {
 
         <TodoForm addTodo = {addTodo}></TodoForm>
 
-        <TodoList></TodoList>
+        <TodoList todoList={todoList} toggleTodoList={toggleTodoList}></TodoList>
       </TodoContainer>
 
     </>
