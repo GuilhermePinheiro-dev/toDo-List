@@ -3,6 +3,7 @@ import { themeConfig } from "../contexts/theme"
 import { ThemeContext } from "../contexts/themeContext"
 import type { Todo } from "../hooks/useTodo";
 import IconCheck from "../../../public/images/icon-check.svg"
+import IconCross from "../../../public/images/icon-cross.svg"
 
 interface TodoListProps {
     todoList: Todo[];
@@ -10,9 +11,10 @@ interface TodoListProps {
     setFilter: (filter: 'all' | 'active' | 'completed') => void
     filter: 'all' | 'active' | 'completed'
     clearCompleted: () => void
+    removeTodoList: (id: number) => void
 }
 
-export const TodoList = ({ todoList, toggleTodoList, setFilter, filter, clearCompleted }: TodoListProps) => {
+export const TodoList = ({ todoList, toggleTodoList, setFilter, filter, clearCompleted, removeTodoList }: TodoListProps) => {
 
     const { theme } = useContext(ThemeContext)
 
@@ -23,15 +25,23 @@ export const TodoList = ({ todoList, toggleTodoList, setFilter, filter, clearCom
                     {
                         todoList.map((todoItem) => (
                             <li key={todoItem.id} className={`p-6 border-b ${themeConfig[theme].todo.borderColor}`}>
-                                <div className="flex items-center gap-4">
-                                    <span className={`w-6 h-6 rounded-full hover:bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))] hover:p-px `}>
-                                        <button
-                                            onClick={() => toggleTodoList(todoItem.id)}
-                                            className={`w-full h-full ${themeConfig[theme].todo.backgroundColor} border ${themeConfig[theme].todo.borderColor} rounded-full cursor-pointer ${todoItem.completed ? "bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))]" : ""}`}>
-                                            {todoItem.completed && <img src={IconCheck} alt="icone de marcado" className="w-2 h-2 m-auto" />}
-                                        </button>
-                                    </span>
-                                    <p className={`${themeConfig[theme].todo.textColor} ${todoItem.completed ? "line-through opacity-50" : ""}`} >{todoItem.text}</p>
+                                <div className="flex items-center justify-between gap-4">
+                                    <div className="flex items-center gap-4">
+                                        <span className={`w-6 h-6 rounded-full hover:bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))] hover:p-px `}>
+                                            <button
+                                                onClick={() => toggleTodoList(todoItem.id)}
+                                                className={`w-full h-full ${themeConfig[theme].todo.backgroundColor} border ${themeConfig[theme].todo.borderColor} rounded-full cursor-pointer ${todoItem.completed ? "bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))]" : ""}`}>
+                                                {todoItem.completed && <img src={IconCheck} alt="icone de marcado" className="w-2 h-2 m-auto" />}
+                                            </button>
+                                        </span>
+                                        <p className={`${themeConfig[theme].todo.textColor} ${todoItem.completed ? "line-through opacity-50" : ""}`} >{todoItem.text}</p>
+
+                                    </div>
+                                    <button
+                                        onClick={() => removeTodoList(todoItem.id)}
+                                        className="cursor-pointer">
+                                        <img src={IconCross} alt="Botão de excliur tarefa" className="w-4 h-4 m-auto" />
+                                    </button>
                                 </div>
                             </li>
                         ))
@@ -58,9 +68,9 @@ export const TodoList = ({ todoList, toggleTodoList, setFilter, filter, clearCom
                         </button>
                     </div>
 
-                    <button 
-                    onClick={clearCompleted}
-                    className={`cursor-pointer ${theme === "dark" ? "hover:text-gray-50" : "hover:text-purple-600"}`}>Clear Completed</button>
+                    <button
+                        onClick={clearCompleted}
+                        className={`cursor-pointer ${theme === "dark" ? "hover:text-gray-50" : "hover:text-purple-600"}`}>Clear Completed</button>
                 </div>
             </div>
             <div className={`${themeConfig[theme].todo.backgroundColor} ${themeConfig[theme].layout.textColor} flex justify-center gap-5 rounded-md py-4 mt-4 sm:hidden`}>
