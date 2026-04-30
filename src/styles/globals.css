@@ -5,14 +5,14 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("/public/fonts/JosefinSans-400_wght.woff2") format("woff2");
+    src: url("../assets/fonts/JosefinSans-400_wght.woff2") format("woff2");
 }
 @font-face {
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: 700;
     font-display: swap;
-    src: url("/public/fonts/JosefinSans-700_wght.woff2") format("woff2");
+    src: url("../assets/fonts/JosefinSans-700_wght.woff2") format("woff2");
 }
 
 @theme {
@@ -41,9 +41,9 @@ body{
 
 @layer base {
     .theme-light{
-        @apply bg-[url('../../public/images/bg-desktop-light.jpg')] bg-cover bg-center bg-no-repeat h-80
+        @apply bg-[url('../assets/images/bg-desktop-light.jpg')] bg-cover bg-center bg-no-repeat h-80
     }
     .theme-dark{
-        @apply bg-[url('../../public/images/bg-desktop-dark.jpg')] bg-cover bg-center bg-no-repeat h-80
+        @apply bg-[url('../assets/images/bg-desktop-dark.jpg')] bg-cover bg-center bg-no-repeat h-80
     }
 }
