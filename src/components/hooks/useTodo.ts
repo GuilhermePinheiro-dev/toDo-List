@@ -48,20 +48,16 @@ export const useTodo = () => {
     }
   };
 
-  const toggleTodoList = (id: number) => {
-    const newTodoList = todoList.map((todo) => {
-      const completed = !todo.completed;
+  const toggleTodoList = async (id: number, completed: boolean) => {
 
-      if (id === todo.id) {
-        return {
-          ...todo,
-          completed,
-        };
-      }
-
-      return todo;
-    });
-    setTodoList(newTodoList);
+    try {
+        await axios.put(`${API_URL}${id}`, { completed });
+        await fetchTodoList();
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
   };
 
   const removeTodoList = (id: number) => {

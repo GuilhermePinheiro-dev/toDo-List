@@ -32,7 +32,11 @@ app.post("/", async (req, res) => {
 
 app.get("/", async (req, res) => {
   try {
-    const todos = await prisma.task.findMany();
+    const todos = await prisma.task.findMany({
+        orderBy:{
+            id: "asc"
+        }
+    });
 
     res.json(todos);
   } catch (error) {
@@ -41,6 +45,27 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.put("/:id", async (req, res)=>{
+    const id = Number(req.params.id)
+    const { completed } = req.body
+
+    const newCompleted = !completed
+    try {
+
+        await prisma.task.update({
+            where: { id },
+            data: {
+                completed: newCompleted
+            }
+        })
+        
+        
+        res.status(200).send()
+    } catch (error) {
+        console.log(error);
+        
+    }
+})
 app.listen(3000, () => {
     console.log(`Servidor em execução na porta: ${port}`);
 });
