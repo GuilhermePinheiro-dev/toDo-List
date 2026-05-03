@@ -10,5 +10,5 @@ datasource db {
 model task {
   id        Int      @id @default(autoincrement())
   text      String?  @db.VarChar(255)
-  completed Boolean?
+  completed Boolean @default(false)
 }

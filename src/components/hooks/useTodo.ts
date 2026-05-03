@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from "react"
+import { useEffect, useState, type FormEvent } from "react"
+import axios from "axios"
 
 export interface Todo {
   id: number, 
@@ -9,6 +10,24 @@ export interface Todo {
 export const useTodo = () => {
     const [todoList, setTodoList] = useState<Todo[]>([])
     const [filter, setFilter] = useState<"all" | "active" | "completed">("all")
+    // const [loading, setLoading] = useState(false)
+
+    const API_URL = "http://localhost:3000/"
+
+    const fetchTodoList =  async () => {
+        // setLoading(true)
+        try {
+            const response = await axios.get(`${API_URL}`)
+            setTodoList(response.data)
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    useEffect(()=> {
+        fetchTodoList()
+    }, [])
 
     const addTodo = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -68,6 +87,7 @@ export const useTodo = () => {
         filteredList,
         clearCompleted,
         toggleTodoList,
-        removeTodoList
+        removeTodoList,
+        fetchTodoList
     }
 }

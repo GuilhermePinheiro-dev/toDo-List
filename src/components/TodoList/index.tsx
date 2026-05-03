@@ -11,10 +11,10 @@ interface TodoListProps {
     setFilter: (filter: 'all' | 'active' | 'completed') => void
     filter: 'all' | 'active' | 'completed'
     clearCompleted: () => void
-    removeTodoList: (id: number) => void
+    removeTodoList: (id: number) => void,
 }
 
-export const TodoList = ({ todoList, toggleTodoList, setFilter, filter, clearCompleted, removeTodoList }: TodoListProps) => {
+export const TodoList = ({ todoList, toggleTodoList, setFilter, filter, clearCompleted, removeTodoList}: TodoListProps) => {
 
     const { theme } = useContext(ThemeContext)
 
