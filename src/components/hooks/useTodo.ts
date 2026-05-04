@@ -10,20 +10,16 @@ export interface Todo {
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
-  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ text: "" });
 
   const API_URL = "http://localhost:3000/";
 
   const fetchTodoList = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(`${API_URL}`);
       setTodoList(response.data);
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -33,7 +29,6 @@ export const useTodo = () => {
 
   const addTodo = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
 
     try {
       await axios.post(`${API_URL}`, form);
@@ -43,26 +38,25 @@ export const useTodo = () => {
       await fetchTodoList();
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
   };
 
   const toggleTodoList = async (id: number, completed: boolean) => {
-
     try {
-        await axios.put(`${API_URL}${id}`, { completed });
-        await fetchTodoList();
-        
+      await axios.put(`${API_URL}${id}`, { completed });
+      await fetchTodoList();
     } catch (error) {
-        console.log(error);
-        
+      console.log(error);
     }
   };
 
-  const removeTodoList = (id: number) => {
-    const newTodoList = todoList.filter((todo) => todo.id !== id);
-    setTodoList(newTodoList);
+  const removeTodoList = async (id: number) => {
+    try {
+      await axios.delete(`${API_URL}${id}`);
+      await fetchTodoList();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const filteredList = todoList.filter((todo) => {
@@ -71,8 +65,13 @@ export const useTodo = () => {
     return true;
   });
 
-  const clearCompleted = () => {
-    setTodoList((prev) => prev.filter((todo) => !todo.completed));
+  const clearCompleted = async () => {
+    try {
+      await axios.delete(`${API_URL}`);
+      await fetchTodoList();
+    } catch (error) {
+      console.log(error);
+    }
   };
   return {
     addTodo,
