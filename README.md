@@ -1,73 +1,101 @@
-# React + TypeScript + Vite
+# ToDo List Fullstack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação fullstack de lista de tarefas com:
+- Frontend em **React + TypeScript + TailwindCSS**
+- Backend em **Node.js + Express + Prisma**
+- Banco de dados **PostgreSQL**
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Sobre o projeto
 
-## React Compiler
+Esta aplicação permite criar, marcar como concluída, excluir e filtrar tarefas. O frontend consome uma API REST simples que persiste os dados no PostgreSQL usando Prisma.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O objetivo é demonstrar um fluxo completo entre interface e servidor, com:
+- cadastro de tarefas
+- listagem e ordenação
+- alternância de estado (concluído / ativo)
+- remoção de tarefas individuais
+- limpeza de tarefas concluídas
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tecnologias
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **React**
+- **TypeScript**
+- **TailwindCSS**
+- **Vite**
+- **Node.js**
+- **Express**
+- **Prisma**
+- **PostgreSQL**
+- **Axios**
+- **CORS**
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Como rodar
+
+### 1. Frontend
+
+```bash
+cd toDo-List
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Backend
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd backend
+npm install
+npm run dev
 ```
+
+### 3. Banco de dados
+
+- Crie ou configure a base de dados PostgreSQL.
+- Adicione `DATABASE_URL` em `backend/.env`.
+- Se necessário, execute migrações com Prisma.
+
+---
+
+## Estrutura do projeto
+
+```text
+├── backend/
+│   ├── lib/prisma.ts          # Cliente Prisma
+│   ├── prisma/schema.prisma   # Modelo do banco de dados
+│   └── server.ts              # API Express
+├── src/
+│   ├── App.tsx                # Componente raiz
+│   ├── main.tsx               # Entrada da aplicação
+│   ├── components/            # Componentes React
+│   │   ├── TodoForm/
+│   │   ├── TodoHeader/
+│   │   ├── TodoList/
+│   │   ├── TodoContainer/
+│   │   └── hooks/useTodo.ts   # Lógica de estado e chamadas à API
+│   └── styles/globals.css
+├── package.json               # Scripts e dependências do frontend
+└── backend/package.json       # Scripts e dependências do backend
+```
+
+---
+
+## API (resumo)
+
+- `GET /` — retorna todas as tarefas ordenadas.
+- `POST /` — cria uma nova tarefa.
+  - body: `{ text: string }`
+- `PUT /:id` — alterna o estado de conclusão de uma tarefa.
+  - body: `{ completed: boolean }`
+- `DELETE /:id` — exclui uma tarefa específica.
+- `DELETE /` — remove todas as tarefas concluídas.
+
+---
+
+## Autor
+
+- **Guilherme Pinheiro**
